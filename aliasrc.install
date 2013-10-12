@@ -8,7 +8,8 @@ alias pdf="evince"
 alias matlab="/usr/local/MATLAB/R2011b/bin/matlab -nodesktop"
 alias clip="xclip -sel clip"
 alias py="python"
-alias rs="rm *~ || rm *#*" #TODO: Make a non-hacky version of this
+#Errors are redirected to /dev/null so that we don't see complaints if there are no ~ or # files
+alias rs="rm *~ 2>/dev/null || rm *#* 2>/dev/null" 
 # alias regex="man 7 regex"
 
 # Bash-related

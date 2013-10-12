@@ -1,6 +1,5 @@
-# Bash-related
-alias bashsrc="source ~/.bashrc"
-alias bashed="emacs ~/.bashrc && bashsrc && echo -e '"'Reloaded bashrc successfully'"'"
+alias emacs="emacs -nw"
+alias em="emacs"
 
 alias pc="pkg-config --cflags --libs"
 alias grep='grep --color -n'
@@ -8,10 +7,10 @@ alias nd="nautilus ."
 alias pdf="evince"
 alias matlab="/usr/local/MATLAB/R2011b/bin/matlab -nodesktop"
 alias clip="xclip -sel clip"
-alias emacs="emacs -nw"
-alias em="emacs"
 alias py="python"
-# alias rs="rm *~ || rm *#*" #TODO: Make a non-hacky version of this
-alias regex="man 7 regex"
+alias rs="rm *~ || rm *#*" #TODO: Make a non-hacky version of this
+# alias regex="man 7 regex"
 
-
+# Bash-related
+alias bashsrc="source ~/.bashrc"
+alias bashed="emacs ~/.bashrc && bashsrc && echo -e '"'Reloaded bashrc successfully'"'"

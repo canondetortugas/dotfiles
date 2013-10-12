@@ -1,4 +1,4 @@
-udev_info()
+function udev_info()
 {
   udevadm info -a -p  $(udevadm info -q path -n ${1})
 }
@@ -19,8 +19,10 @@ function mark {
 function unmark { 
     rm -i $MARKPATH/$1 
 }
+
+# Note: \t depends on GNU extension. With GNU, it will add a tab, but otherwise will just add a "t" character. Literal tab is used for cross-platform compatability
 function marks {
-    ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
+    ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/	-/g' && echo
 }
 
 # Russell's hack

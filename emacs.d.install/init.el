@@ -1,3 +1,4 @@
+(add-to-list 'load-path "~/.emacs.d/misc")
 (add-to-list 'load-path "~/.emacs.d/yaml/")
 (add-to-list 'load-path "~/.emacs.d/matlab-emacs/")
 
@@ -53,6 +54,8 @@
 (show-paren-mode 1)
 (add-hook 'lisp-mode-hook '(lambda ()
 			     (local-set-key (kbd "RET") 'newline-and-indent)))
+(add-hook 'slime-repl-mode-hook '(lambda ()
+				   (local-set-key (kbd "C-c x") 'slime-repl-quit)))
 
 ;; ----- Yank to clipboard -----
 
@@ -78,6 +81,10 @@
 
 (global-set-key (kbd "M--") "// ################################################################")
 
+;; Shortcuts for examining unbound keys
+(require 'unbound)
+
 ;; ----- emerge -----
 
-(setq emerge-diff-options "--ignore-all-space")
+;; Only works with diff, not diff3
+;; (setq emerge-diff-options "--ignore-all-space")

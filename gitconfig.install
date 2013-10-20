@@ -1,5 +1,5 @@
 [core]
-  excludesfile = ~/.gitignore
+  excludesfile = /home/nalyd/.gitignore
 
 [user]
   name = Dylan Foster
@@ -38,4 +38,4 @@
   default = nothing
 
 [mergetool "emerge"]
-	path = ~/.emerge-for-git
+	path = /home/nalyd/.emerge-for-git

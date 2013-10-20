@@ -35,4 +35,4 @@
   type = cat-file -t
   dump = cat-file -p
 [push]
-	default = simple
+	default = nothing

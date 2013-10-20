@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 # Bash-related
 alias bashsrc="source ~/.bashrc"
 alias bashed="emacs ~/.bashrc && bashsrc && echo -e '"'Reloaded bashrc successfully'"'"

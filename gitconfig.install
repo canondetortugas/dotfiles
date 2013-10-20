@@ -2,8 +2,8 @@
   excludesfile = ~/.gitignore
 
 [user]
-	name = Dylan Foster
-	email = turtlecannon@gmail.com
+  name = Dylan Foster
+  email = turtlecannon@gmail.com
 
 [color]
   ui = true
@@ -35,4 +35,4 @@
   type = cat-file -t
   dump = cat-file -p
 [push]
-	default = simple
+  default = nothing

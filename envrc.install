@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 # Colored man pages etc. "-w" turns on line wrapping
 export PAGER="most -w"
 

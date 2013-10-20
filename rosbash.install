@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 source /opt/ros/groovy/setup.bash
 export ROS_WORKSPACE=~/ros_workspace
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/ros_workspace

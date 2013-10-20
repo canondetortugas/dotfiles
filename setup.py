@@ -29,6 +29,6 @@ for dotfile in os.listdir(dotfilesdir):
 if not os.path.exists(os.path.join(os.environ["HOME"], '.pathrcc')):
   f = open(os.path.join(os.environ["HOME"], '.pathrcc'), 'w')
   f.write('# This file is for machine specific paths\n\n\n')
-  f.write('# vim:syntax=sh')
+  # f.write('# vim:syntax=sh')
   f.close()
 

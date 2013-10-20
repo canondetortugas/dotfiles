@@ -77,3 +77,7 @@
 				    '(("\\<\\(FIXME\\|TODO\\|BUG\\|todo\\):" 1 font-lock-variable-name-face t)))))
 
 (global-set-key (kbd "M--") "// ################################################################")
+
+;; ----- emerge -----
+
+(setq emerge-diff-options "--ignore-all-space")

@@ -25,7 +25,7 @@
 
 [merge]
   tool = emerge
-
+  
 [alias]
   co = checkout
   ci = commit
@@ -36,3 +36,6 @@
   dump = cat-file -p
 [push]
   default = nothing
+
+[mergetool "emerge"]
+	path = ~/.emerge-for-git

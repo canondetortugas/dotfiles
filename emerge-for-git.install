@@ -1,0 +1,4 @@
+#!/bin/sh
+# -*- mode: sh -*-
+echo "Dylan's fancy mergetool"
+emacs -nw $*

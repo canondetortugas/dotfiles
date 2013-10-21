@@ -10,7 +10,7 @@
  (setq matlab-indent-function t)
  (setq matlab-shell-command "matlab")
 
-;; ----- Rosemacs stuff -----
+;; ----- rosemacs stuff -----
 
 ;; Tell emacs where to find the rosemacs sources
 ;; replace the path with location of rosemacs on your system
@@ -81,6 +81,11 @@
 
 (global-set-key (kbd "M--") "// ################################################################")
 
+;; (set-cursor-color "red")
+;; (send-string-to-terminal "\033]12;red\007")
+;; (add-hook 'window-setup-hook '(lambda ()
+;; 				(set-cursor-color "red")))
+
 ;; Shortcuts for examining unbound keys
 (require 'unbound)
 
@@ -88,3 +93,20 @@
 
 ;; Only works with diff, not diff3
 ;; (setq emerge-diff-options "--ignore-all-space")
+
+;; ----- latex -----
+(add-hook 'latex-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c r")
+			   (lambda ()
+			     (interactive) (insert "\\langle{}\\rangle{}") (backward-char 9)))))
+(add-hook 'latex-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c m")
+			   (lambda ()
+			     (interactive) (insert "\\[ \\]") (backward-char 3)))))
+(add-hook 'latex-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c d")
+			   (lambda ()
+			     (interactive) (insert "$$") (backward-char 1)))))

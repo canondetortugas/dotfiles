@@ -2,5 +2,7 @@
 export PAGER="most -w"
 # export PATH="$PATH:/home/nalyd/Desktop/adt-bundle-linux-x86_64-20130917/sdk/tools:/home/nalyd/Desktop/adt-bundle-linux-x86_64-20130917/sdk/platform-tools"
 
-PATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+# PATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+PATH=/usr/local/bin:$PATH
 PATH=/usr/texbin:$PATH
+PATH=/usr/local/share/python:$PATH

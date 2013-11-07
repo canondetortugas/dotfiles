@@ -8,6 +8,11 @@ function cl()
     cd $@ && ls;
 }
 
+function act()
+{
+    source $ENVIRONMENTS_DIR/$1/bin/activate
+}
+
 # MARKS
 export MARKPATH=$HOME/.marks
 function go { 

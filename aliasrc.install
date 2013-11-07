@@ -6,7 +6,7 @@ alias grep='grep --color -n'
 alias nd="nautilus ."
 alias pdf="open -a Preview"
 alias matlab="/usr/local/MATLAB/R2011b/bin/matlab -nodesktop"
-alias clip="xclip -sel clip"
+alias clip="pbcopy"
 alias py="python"
 #Errors are redirected to /dev/null so that we don't see complaints if there are no ~ or # files
 alias rs="rm *~ 2>/dev/null; rm *#* 2>/dev/null" 
@@ -15,3 +15,5 @@ alias rs="rm *~ 2>/dev/null; rm *#* 2>/dev/null"
 # Bash-related
 alias bashsrc="source ~/.bashrc"
 alias bashed="emacs ~/.bashrc && bashsrc && echo -e '"'Reloaded bashrc successfully'"'"
+
+alias mac="ifconfig en0 | grep ether | cut  -f 2 -d \ "

@@ -6,3 +6,5 @@ export PAGER="most -w"
 PATH=/usr/local/bin:$PATH
 PATH=/usr/texbin:$PATH
 PATH=/usr/local/share/python:$PATH
+
+ENVIRONMENTS_DIR=~/workspace/environments

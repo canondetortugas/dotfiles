@@ -1,7 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/misc")
 (add-to-list 'load-path "~/.emacs.d/yaml/")
 (add-to-list 'load-path "~/.emacs.d/matlab-emacs/")
-
 ;; ----- Matlab -----
 (autoload 'matlab-mode "matlab.el" "Matlab Editing Mode" t)
  (add-to-list
@@ -81,6 +80,13 @@
 
 (global-set-key (kbd "M--") "// ################################################################")
 
+;; Cycle through windows in reverse
+(defun backward-window () 
+  "Move to the previous window"
+  (interactive)
+  (other-window -1) )
+(global-set-key (kbd "C-x p") 'backward-window)
+
 ;; (set-cursor-color "red")
 ;; (send-string-to-terminal "\033]12;red\007")
 ;; (add-hook 'window-setup-hook '(lambda ()
@@ -105,8 +111,50 @@
 	    (local-set-key (kbd "C-c m")
 			   (lambda ()
 			     (interactive) (insert "\\[ \\]") (backward-char 3)))))
+;; (add-hook 'latex-mode-hook
+;; 	  (lambda ()
+;; 	    (local-set-key (kbd "C-c d")
+;; 			   (lambda ()
+;; 			     (interactive) (insert "$$") (backward-char 1)))))
+
+
+
+;; TODO: This doesn't currently get disabled on leaving latex-mode
+
+(defvar latex-mode-extensions-keymap
+  (let ((km (make-sparse-keymap)))
+    (define-key km (kbd "C-c d") (lambda ()
+				   (interactive) (insert "$$") (backward-char 1)))
+    km)
+  )
+
+(defvar latex-mode-extensions nil)
+
+(push (cons 'latex-mode-extensions latex-mode-extensions-keymap) minor-mode-map-alist)
+
 (add-hook 'latex-mode-hook
 	  (lambda ()
-	    (local-set-key (kbd "C-c d")
-			   (lambda ()
-			     (interactive) (insert "$$") (backward-char 1)))))
+	    (setq latex-mode-extensions t) ) )
+
+;; XML Mode
+;; Automatically close 
+(add-hook 'nxml-mode-hook
+	  (lambda ()
+	    (setq nxml-slash-auto-complete-flag t)))
+
+;; Open this file
+(global-set-key (kbd "C-c e") 
+		(lambda ()
+		  (interactive)
+		  (find-file "~/.emacs.d/init.el" ) ) )
+
+(defun insert-depends (package)
+  (interactive "MPackage: ")
+  (insert "<build_depend>" package "</build_depend>\n")
+  (indent-for-tab-command)
+  (insert "<run_depend>" package "</run_depend>\n" ) 
+  (indent-for-tab-command))
+
+(add-hook 'nxml-mode-hook
+	  (lambda () 
+	  (local-set-key (kbd "C-c d") 'insert-depends ) ))

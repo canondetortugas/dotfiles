@@ -72,13 +72,93 @@
 
 ;; ----- Misc. -----
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; TODO: Add TODO highlighting for other modes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Author: Dylan Foster, Date: 2014-01-09 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; highlight TODO, FIXME, etc.
 (add-hook 'c-mode-common-hook
 	  (lambda ()
 	    (font-lock-add-keywords nil
 				    '(("\\<\\(FIXME\\|TODO\\|BUG\\|todo\\):" 1 font-lock-variable-name-face t)))))
 
-(global-set-key (kbd "M--") "// ################################################################")
+(defun my-comment ()
+  (case major-mode
+    ('c++-mode (list "//" "/"))
+    ('c-mode (list "//" "/"))
+    (otherwise (list comment-start comment-end))
+    )
+  )
+
+(defun my-comment-start ()
+  (first (my-comment) ) )
+
+(defun my-comment-end()
+  (car (last (my-comment) ) ) )
+
+(defvar comment-line-length 100 "Line length that we will fill out with comment characters")
+
+(defun comment-line ()
+  (interactive)
+  (if (use-region-p)
+      nil
+    (let ((eol-pos (+ (line-beginning-position) comment-line-length))
+	  (comment-start (my-comment-start))
+	  (comment-end (my-comment-end))
+	  )
+      (end-of-line)
+      (when (/= (point) (line-beginning-position) )
+	(insert " "))
+      (do ()
+	  ((< eol-pos (point)))
+	(insert comment-start) )
+      (when (= eol-pos (point))
+	(if (string= comment-end "")
+	    (insert comment-start)
+	  (insert comment-end)
+	  )
+	)
+      (newline-and-indent)
+      ) 
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; TODO: Add more lines if the comment won't fit on one line ;;;;;;;;;;;;;;;;;;;;;
+; Author: Dylan Foster, Date: 2014-01-09 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun fancy-comment (comment-string)
+  (interactive "MComment: ")
+  (newline-and-indent)
+  (comment-line)
+  (insert (concatenate 'string (my-comment-start) " " comment-string ))
+  (comment-line)
+  (comment-line)
+)
+
+(defvar todo-author "Dylan Foster")
+(defun insert-todo (comment-string)
+  (interactive "MComment: ")
+  (newline-and-indent)
+  (comment-line)
+  (insert (concatenate 'string (my-comment-start) 
+		       " TODO: " comment-string ) )
+  (comment-line)
+  (insert (concatenate 'string (my-comment-start) 
+		       " Author: " todo-author ", Date: " (format-time-string "%Y-%m-%d") ) )
+  (comment-line)
+
+  (comment-line)
+  )
+
+
+(global-set-key (kbd "M--") 'comment-line)
+(global-set-key (kbd "C-c c") 'fancy-comment)
+(global-set-key (kbd "C-c t") 'insert-todo)
+
 
 ;; Cycle through windows in reverse
 (defun backward-window () 
@@ -87,6 +167,7 @@
   (other-window -1) )
 (global-set-key (kbd "C-x p") 'backward-window)
 
+;; comment-end
 ;; (set-cursor-color "red")
 ;; (send-string-to-terminal "\033]12;red\007")
 ;; (add-hook 'window-setup-hook '(lambda ()
@@ -101,16 +182,7 @@
 ;; (setq emerge-diff-options "--ignore-all-space")
 
 ;; ----- latex -----
-(add-hook 'latex-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c r")
-			   (lambda ()
-			     (interactive) (insert "\\langle{}\\rangle{}") (backward-char 9)))))
-(add-hook 'latex-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c m")
-			   (lambda ()
-			     (interactive) (insert "\\[ \\]") (backward-char 3)))))
+
 ;; (add-hook 'latex-mode-hook
 ;; 	  (lambda ()
 ;; 	    (local-set-key (kbd "C-c d")
@@ -120,7 +192,6 @@
 
 
 ;; TODO: This doesn't currently get disabled on leaving latex-mode
-
 (defvar latex-mode-extensions-keymap
   (let ((km (make-sparse-keymap)))
     (define-key km (kbd "C-c d") (lambda ()

@@ -648,7 +648,7 @@ If font lock is not loaded, lay in wait."
     (define-key km [(control h) (control m)] matlab-help-map)
     (define-key km [(control j)] 'matlab-linefeed)
     (define-key km "\M-\r" 'newline)
-    (define-key km [(meta \;)] 'matlab-comment)
+    (define-key km [(meta \;)] 'matlab-comment-dwim)
     (define-key km [(meta q)] 'matlab-fill-paragraph)
     (define-key km [(meta a)] 'matlab-beginning-of-command)
     (define-key km [(meta e)] 'matlab-end-of-command)
@@ -2258,7 +2258,7 @@ If there isn't one, then return nil, point otherwise."
 	(delete-horizontal-space)
 	(indent-to i))
       ;; If line contains a comment, format it.
-      (if () (if (matlab-lattr-comm) (matlab-comment))))
+      (if () (if (matlab-lattr-comm) (matlab-comment-dwim))))
     (if (<= c i) (move-to-column i))))
 
 (defun matlab-calc-indent ()
@@ -2663,7 +2663,7 @@ Has effect of `matlab-return' with (not matlab-indent-before-return)."
     (newline) (indent-to comment-column)
     (insert matlab-comment-on-line-s))
    (t
-    (newline) (matlab-comment) (matlab-indent-line))))
+    (newline) (matlab-comment-dwim) (matlab-indent-line))))
 
 (defun matlab-comm-from-prev ()
   "If the previous line is a comment-line then set up a comment on this line."
@@ -2693,10 +2693,89 @@ Argument ARG specifies how many %s to insert."
 
 ;;; Comment management========================================================
 
-(defun matlab-comment ()
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Dylan's comment stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun matlab-line-is-comment ()
+  (interactive)
+  (let ((current-line (buffer-substring-no-properties (line-beginning-position) (line-end-position)))) ;: Grab the current line
+    (if (string-match "^[ \t]*%.*" current-line) ;: Match whitespace, followed by '%', followed by anything
+	t
+      nil)
+    )
+  )
+
+;; Check whether or not every line in the buffer is a comment
+(defun matlab-buffer-is-comment ()
+  (interactive)
+  (let ((point-pos (point))
+	(is-comment t))
+    (beginning-of-buffer)
+    (do ()
+	((or (not is-comment) (= (point) (point-max) ) ))
+      (when (not (matlab-line-is-comment))
+	(setf is-comment nil))
+      (forward-line)
+      )
+    (goto-char point-pos)
+    is-comment
+    )
+  )
+
+(defun matlab-comment-line ()
+  (interactive)
+  (beginning-of-line)
+  (skip-chars-forward " \t")
+  (insert "% ")
+  (end-of-line)
+)
+
+(defun matlab-uncomment-line ()
+  (interactive)
+  (beginning-of-line)
+  (when (re-search-forward "%[ \t]*" (line-end-position) t) 
+    (replace-match "")
+    )
+  (end-of-line)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; End Dylan's comment stuff ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+(defun matlab-comment-dwim ()
   "Add a comment to the current line."
   (interactive)
-  (cond ((matlab-ltype-empty)		; empty line
+  (cond ((use-region-p)			; Comment out the current region
+	 (let ((is-comment nil))
+	   (save-restriction
+	     (narrow-to-region (region-beginning) (region-end))
+	     (beginning-of-buffer)
+	     (setf is-comment (matlab-buffer-is-comment))
+	     (if is-comment
+		 (progn
+		   (do ()
+		       ((= (point) (point-max) ))
+		     (matlab-uncomment-line)
+		     (forward-line)
+		     )
+		   )
+	       (progn
+		 (do ()
+		     ((= (point) (point-max) ))
+		   (matlab-comment-line)
+		   (forward-line)
+		   )
+		 )
+	       )
+	     )
+	   (when (and (not is-comment) (not (looking-at "[ \t]*$")))
+	     (newline-and-indent)
+	     )
+	   )
+	 )
+	((matlab-ltype-empty)		; empty line
 	 (matlab-comm-from-prev)
 	 (if (matlab-lattr-comm)
 	     (skip-chars-forward " \t%")
@@ -2712,7 +2791,8 @@ Argument ARG specifies how many %s to insert."
 	 (if (> (current-column) comment-column) (delete-horizontal-space))
 	 (if (< (current-column) comment-column) (indent-to comment-column))
 	 (skip-chars-forward "% \t"))
-	(t				; code line w/o comment
+	(t				; else (code line w/o comment
+	 ;; (message "evaling the last thing")
 	 (end-of-line)
 	 (re-search-backward "[^ \t\n^]" 0 t)
 	 (forward-char)
@@ -4080,7 +4160,7 @@ desired.  Optional argument FAST is not used."
       ["Indent Synactic Block" matlab-indent-sexp])
      ("Insert"
       ["Complete Symbol" matlab-complete-symbol t]
-      ["Comment" matlab-comment t]
+      ["Comment" matlab-comment-dwim t]
       ["if end" tempo-template-matlab-if t]
       ["if else end" tempo-template-matlab-if-else t]
       ["for end" tempo-template-matlab-for t]

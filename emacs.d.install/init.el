@@ -25,7 +25,9 @@
 
 ;; Adds yaml mode
 (require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+;; Each line adds a key-value pair (e.g. ("\\.yml$" . yaml-mode) to
+;; an associative array (auto-mode-alist)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)) 
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 ;; Open .rviz files in yaml-mode
 (add-to-list 'auto-mode-alist '("\\.rviz$" . yaml-mode))

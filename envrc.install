@@ -8,3 +8,5 @@ PATH=/usr/texbin:$PATH
 PATH=/usr/local/share/python:$PATH
 
 ENVIRONMENTS_DIR=~/workspace/environments
+
+export CLICOLOR=1

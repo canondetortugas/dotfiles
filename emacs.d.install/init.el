@@ -1,6 +1,11 @@
 (add-to-list 'load-path "~/.emacs.d/misc")
 (add-to-list 'load-path "~/.emacs.d/yaml/")
 (add-to-list 'load-path "~/.emacs.d/matlab-emacs/")
+
+;; C++
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode)) 
+
+
 ;; ----- Matlab -----
 (autoload 'matlab-mode "matlab.el" "Matlab Editing Mode" t)
  (add-to-list
@@ -89,6 +94,7 @@
   (case major-mode
     ('c++-mode (list "//" "/"))
     ('c-mode (list "//" "/"))
+    ('yaml-mode (list "#" "#"))
     (otherwise (list comment-start comment-end))
     )
   )
@@ -110,7 +116,8 @@
 	  (comment-end (my-comment-end))
 	  )
       (end-of-line)
-      (when (/= (point) (line-beginning-position) )
+      ;; Don't insert whitespace if the line contains only whitespace
+      (unless (string-match "^[ \t]*" (buffer-substring-no-properties (line-beginning-position) (line-end-position)) )
 	(insert " "))
       (do ()
 	  ((< eol-pos (point)))
@@ -231,3 +238,4 @@
 (add-hook 'nxml-mode-hook
 	  (lambda () 
 	  (local-set-key (kbd "C-c d") 'insert-depends ) ))
+(put 'set-goal-column 'disabled nil)

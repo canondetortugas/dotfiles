@@ -320,7 +320,7 @@ This effectively shortens the `fill-column' by the length of
 If `matlab-fill-count-ellipsis-flag' is non nil, this shortens the
 `fill-column' by the length of `matlab-elipsis-string'.")
 
-(defcustom matlab-comment-column 40
+(defcustom matlab-comment-column 60
   "*The goal comment column in `matlab-mode' buffers."
   :group 'matlab
   :type 'integer)
@@ -2574,7 +2574,7 @@ See `matlab-calculate-indentation'."
 	     (if rc (- 0 matlab-comment-anti-indent) 0)
 	     ))))))
 
-;;; The return key ============================================================
+;;; the return key ============================================================
 
 (defcustom matlab-return-function 'matlab-indent-end-before-ret
   "Function to handle return key.

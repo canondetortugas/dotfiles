@@ -1,5 +1,6 @@
 [core]
   excludesfile = /home/nalyd/.gitignore
+  editor = emacs -nw
 
 [user]
   name = Dylan Foster

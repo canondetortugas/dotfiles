@@ -17,4 +17,4 @@ export ROSCONSOLE_FORMAT='[${severity}] [${time}] [${node}]: ${message}'
 if [ -f /home/nalyd/catkin_ws/src/uscauv-ros-pkg/uscauv_scripts/uscauv.bash ]; then
    source /home/nalyd/catkin_ws/src/uscauv-ros-pkg/uscauv_scripts/uscauv.bash
 fi
-source ~/catkin_ws/devel/setup.bash
+# source ~/catkin_ws/devel/setup.bash

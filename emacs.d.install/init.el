@@ -7,7 +7,8 @@
   'auto-mode-alist
   '("\\.m$" . matlab-mode))
  (setq matlab-indent-function t)
- (setq matlab-shell-command "matlab")
+;; Make matlab-mode find the matlab executable
+ (setq matlab-shell-command "/Applications/MATLAB_R2013a.app/bin/matlab")
 
 ;; Adds yaml mode
 (require 'yaml-mode)
@@ -24,10 +25,12 @@
 (add-hook 'c-mode-common-hook'doxymacs-mode)
 
 ;; doxygen syntax highlighting
-(defun my-doxymacs-font-lock-hook ()
-    (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-        (doxymacs-font-lock)))
-  (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+;; (defun my-doxymacs-font-lock-hook ()
+;;     (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+;;         (doxymacs-font-lock)))
+;; (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+
+(show-paren-mode 1)
 
 ;; ----- Yank to clipboard -----
 
@@ -70,7 +73,7 @@
 (defun my-comment-end()
   (car (last (my-comment) ) ) )
 
-(defvar comment-line-length 100 "Line length that we will fill out with comment characters")
+(defvar comment-line-length 60 "Line length that we will fill out with comment characters")
 
 (defun comment-line ()
   (interactive)
@@ -202,3 +205,15 @@
 (add-hook 'nxml-mode-hook
 	  (lambda () 
 	  (local-set-key (kbd "C-c d") 'insert-depends ) ))
+;; iPython
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args ""
+ python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+ python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+ python-shell-completion-setup-code
+   "from IPython.core.completerlib import module_completion"
+ python-shell-completion-module-string-code
+   "';'.join(module_completion('''%s'''))\n"
+ python-shell-completion-string-code
+   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")

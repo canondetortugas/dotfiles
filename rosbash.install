@@ -3,8 +3,10 @@
 # source /opt/ros/groovy/setup.bash
 source /opt/ros/hydro/setup.bash
 export ROS_WORKSPACE=~/catkin_ws
-
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/catkin_ws
+# export ROS_WORKSPACE=~/ros_workspace
+# export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/ros_workspace
+
 export USCAUV_USER="Dylan Foster (turtlecannon@gmail.com)"
 
 # export ROSCONSOLE_FORMAT='[${severity}] [${time}]: ${message} ${file} ${line}' # fancier printing
@@ -15,3 +17,4 @@ export ROSCONSOLE_FORMAT='[${severity}] [${time}] [${node}]: ${message}'
 if [ -f /home/nalyd/catkin_ws/src/uscauv-ros-pkg/uscauv_scripts/uscauv.bash ]; then
    source /home/nalyd/catkin_ws/src/uscauv-ros-pkg/uscauv_scripts/uscauv.bash
 fi
+# source ~/catkin_ws/devel/setup.bash

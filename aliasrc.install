@@ -1,7 +1,15 @@
+# -*- mode: sh -*-
+
+# Bash-related
+alias bashsrc="source ~/.bashrc"
+alias bashed="emacs ~/.bashrc && bashsrc && echo -e '"'Reloaded bashrc successfully'"'"
+
+# Emacs
 alias emacs="emacs -nw"
 alias em="emacs"
 alias ec="open -a /usr/local/Cellar/emacs/24.3/Emacs.app"
 
+# Other
 alias pc="pkg-config --cflags --libs"
 alias grep='grep --color -n'
 alias nd="open `pwd`"
@@ -11,7 +19,7 @@ alias clip="pbcopy"
 alias py="python"
 #Errors are redirected to /dev/null so that we don't see complaints if there are no ~ or # files
 alias rs="rm *~ 2>/dev/null; rm *#* 2>/dev/null" 
-# alias regex="man 7 regex"
+alias vtime="/usr/bin/time -v"
 
 # Bash-related
 alias bashsrc="source ~/.bashrc"

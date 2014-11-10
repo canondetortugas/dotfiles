@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 # Colored man pages etc. "-w" turns on line wrapping
 export PAGER="most -w"
 # export PATH="$PATH:/home/nalyd/Desktop/adt-bundle-linux-x86_64-20130917/sdk/tools:/home/nalyd/Desktop/adt-bundle-linux-x86_64-20130917/sdk/platform-tools"

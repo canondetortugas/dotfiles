@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -110,7 +112,7 @@ fi
 # TODO: Check that these exist
 source ~/.aliasrc
 source ~/.envrc
-# source ~/.rosbash
+source ~/.rosbash
 source ~/.bashfunctions
 source ~/.git-completion.bash
 source ~/.git-prompt.sh

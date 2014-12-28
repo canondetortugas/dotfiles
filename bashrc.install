@@ -112,7 +112,7 @@ fi
 # TODO: Check that these exist
 source ~/.aliasrc
 source ~/.envrc
-source ~/.rosbash
+# source ~/.rosbash
 source ~/.bashfunctions
 source ~/.git-completion.bash
 source ~/.git-prompt.sh

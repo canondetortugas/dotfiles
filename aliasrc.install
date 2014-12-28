@@ -1,12 +1,13 @@
 # -*- mode: sh -*-
 
+# Emacs
+# alias emacs="emacs -nw"
+alias em="emacs -nw"
+alias ec="emacs"
+
 # Bash-related
 alias bashsrc="source ~/.bashrc"
-alias bashed="emacs ~/.bashrc && bashsrc && echo -e '"'Reloaded bashrc successfully'"'"
-
-# Emacs
-alias emacs="emacs -nw"
-alias em="emacs"
+alias bashed="em ~/.bashrc && bashsrc && echo -e '"'Reloaded bashrc successfully'"'"
 
 # Other
 alias pc="pkg-config --cflags --libs"

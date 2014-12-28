@@ -1,10 +1,16 @@
 (add-to-list 'load-path "~/.emacs.d/misc")
 (add-to-list 'load-path "~/.emacs.d/yaml/")
 (add-to-list 'load-path "~/.emacs.d/matlab-emacs/")
+(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 
 ;; C++
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode)) 
 
+;; Color Theme (in X mode)
+(if (eq 'x window-system)
+    (progn (require 'color-theme)
+	   (color-theme-initialize)
+	   (color-theme-classic)))
 
 ;; ----- Matlab -----
 (autoload 'matlab-mode "matlab.el" "Matlab Editing Mode" t)
@@ -203,20 +209,59 @@
 
 
 ;; TODO: This doesn't currently get disabled on leaving latex-mode
-(defvar latex-mode-extensions-keymap
-  (let ((km (make-sparse-keymap)))
-    (define-key km (kbd "C-c d") (lambda ()
-				   (interactive) (insert "$$") (backward-char 1)))
-    km)
-  )
+;; (defvar latex-mode-extensions-keymap
+;;   (let ((km (make-sparse-keymap)))
+;;     (define-key km (kbd "C-c d") (lambda ()
+;; 				   (interactive) (insert "$$") (backward-char 1)))
+;;     km)
+;;   )
 
-(defvar latex-mode-extensions nil)
+;; (defvar latex-mode-extensions nil)
 
-(push (cons 'latex-mode-extensions latex-mode-extensions-keymap) minor-mode-map-alist)
+;; (push (cons 'latex-mode-extensions latex-mode-extensions-keymap) minor-mode-map-alist)
 
-(add-hook 'latex-mode-hook
-	  (lambda ()
-	    (setq latex-mode-extensions t) ) )
+;; (add-hook 'latex-mode-hook
+;; 	  (lambda ()
+;; 	    (setq latex-mode-extensions t) ) )
+
+;; AUCTeX
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+
+(require 'tex)
+(TeX-global-PDF-mode t)
+
+;; FlyMake LaTeX
+;; (require 'flymake)
+
+;; (defun flymake-get-tex-args (file-name)
+;; (list "pdflatex"
+;; (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
+
+;; (add-hook 'LaTeX-mode-hook 'flymake-mode)
+
+
+;; LaTeX info - C-h S looks up documentation for TeX symbol at point
+(require 'info-look)
+(info-lookup-add-help
+ :mode 'latex-mode
+ :regexp ".*"
+ :parse-rule "\\\\?[a-zA-Z]+\\|\\\\[^a-zA-Z]"
+ :doc-spec '(("(latex2e)Concept Index" )
+	     ("(latex2e)Command Index")))
+
+;; Add LaTeX preview pane package to archive
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; XML Mode
 ;; Automatically close 
@@ -241,15 +286,16 @@
 	  (lambda () 
 	  (local-set-key (kbd "C-c d") 'insert-depends ) ))
 (put 'set-goal-column 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-
-(defun insert-python-shebang ()
-  (interactive)
-  (goto-char (point-min))
-  (insert "#!/usr/bin/env python")
-  (newline-and-indent)
-  )
-
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c s") 'insert-python-shebang)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(inhibit-startup-screen t)
+ '(preview-fast-conversion nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

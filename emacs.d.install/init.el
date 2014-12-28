@@ -236,8 +236,8 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 
-(require 'tex)
-(TeX-global-PDF-mode t)
+;; (require 'tex)
+;; (TeX-global-PDF-mode t)
 
 ;; FlyMake LaTeX
 ;; (require 'flymake)
@@ -299,3 +299,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Haskell
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)

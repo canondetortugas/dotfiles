@@ -3,3 +3,11 @@
 # Colored man pages etc. "-w" turns on line wrapping
 export PAGER="most -w"
 # export PATH="$PATH:/home/nalyd/Desktop/adt-bundle-linux-x86_64-20130917/sdk/tools:/home/nalyd/Desktop/adt-bundle-linux-x86_64-20130917/sdk/platform-tools"
+
+# 545 Stuff
+export MACHTYPE=x86_64 
+export PROG_ROOT=~/workspace/cs545-lab/prog
+export LAB_ROOT=~/workspace/cs545-lab/prog_root
+export PATH=./$MACHTYPE:$PATH
+
+export PATH=~/workspace/colorgcc/bin:$PATH

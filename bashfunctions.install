@@ -10,6 +10,11 @@ function cl()
     cd $@ && ls;
 }
 
+function s()
+{
+    find . -iname "*$1*"
+}
+
 # MARKS
 export MARKPATH=$HOME/.marks
 function go { 
@@ -25,6 +30,11 @@ function unmark {
 # Note: \t depends on GNU extension. With GNU, it will add a tab, but otherwise will just add a "t" character. Literal tab is used for cross-platform compatability
 function marks {
     ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/	-/g' && echo
+}
+
+function cm
+{
+    catkin_make -C $ROS_WORKSPACE $@
 }
 
 # Russell's hack

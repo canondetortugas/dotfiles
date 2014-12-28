@@ -116,3 +116,9 @@ source ~/.rosbash
 source ~/.bashfunctions
 source ~/.git-completion.bash
 source ~/.git-prompt.sh
+
+# Fix triple click on mac touchpad
+synclient TapButton3=2
+
+# export ROS_MASTER_URI=http://192.168.1.78:11311
+# export ROS_IP=192.168.1.78

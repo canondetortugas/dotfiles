@@ -13,7 +13,7 @@ alias pc="pkg-config --cflags --libs"
 alias grep='grep --color -n'
 alias nd="nautilus ."
 alias pdf="evince"
-alias matlab="/usr/local/MATLAB/R2013a/bin/matlab -nodesktop"
+alias matlab="rlwrap -a /usr/local/MATLAB/R2013a/bin/matlab -nodesktop"
 alias clip="xclip -sel clip"
 alias py="python"
 #Errors are redirected to /dev/null so that we don't see complaints if there are no ~ or # files

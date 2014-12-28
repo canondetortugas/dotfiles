@@ -95,6 +95,7 @@
     ('c++-mode (list "//" "/"))
     ('c-mode (list "//" "/"))
     ('yaml-mode (list "#" "#"))
+    ('python-mode (list "#" "#"))
     (otherwise (list comment-start comment-end))
     )
   )
@@ -105,7 +106,8 @@
 (defun my-comment-end()
   (car (last (my-comment) ) ) )
 
-(defvar comment-line-length 100 "Line length that we will fill out with comment characters")
+;; TODO: Tabs currently count as a single character instead of N spaces, which screws this up.
+(defvar comment-line-length 60 "Line length that we will fill out with comment characters")
 
 (defun comment-line ()
   (interactive)
@@ -239,3 +241,15 @@
 	  (lambda () 
 	  (local-set-key (kbd "C-c d") 'insert-depends ) ))
 (put 'set-goal-column 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+
+(defun insert-python-shebang ()
+  (interactive)
+  (goto-char (point-min))
+  (insert "#!/usr/bin/env python")
+  (newline-and-indent)
+  )
+
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c s") 'insert-python-shebang)))

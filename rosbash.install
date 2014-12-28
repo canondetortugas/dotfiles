@@ -2,7 +2,6 @@
 
 # source /opt/ros/groovy/setup.bash
 source /opt/ros/hydro/setup.bash
-export ROS_WORKSPACE=~/catkin_ws
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/catkin_ws
 # export ROS_WORKSPACE=~/ros_workspace
 # export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/ros_workspace
@@ -14,7 +13,16 @@ export ROSCONSOLE_FORMAT='[${severity}] [${time}] [${node}]: ${message}'
 
 # Source USC AUV uscauv_scripts package ########################
 # TODO: Remove absolute path
-if [ -f /home/nalyd/catkin_ws/src/uscauv-ros-pkg/uscauv_scripts/uscauv.bash ]; then
-   source /home/nalyd/catkin_ws/src/uscauv-ros-pkg/uscauv_scripts/uscauv.bash
+if [ -f /home/nalyd/catkin_ws/src/uscauv/uscauv_scripts/uscauv.bash ]; then
+   source /home/nalyd/catkin_ws/src/uscauv/uscauv_scripts/uscauv.bash
 fi
 source ~/catkin_ws/devel/setup.bash
+
+export ROS_WORKSPACE=~/catkin_ws
+
+source ~/ros_master.bash
+
+export ROSLAUNCH_SSH_UNKNOWN=1
+
+alias start-learning="rosservice call /start_learning"
+alias stop-learning="rosservice call /stop_learning"

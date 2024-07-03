@@ -1,16 +1,57 @@
+;; ____________________________________________________________________________
+;; Aquamacs custom-file warning:
+;; Warning: After loading this .emacs file, Aquamacs will also load
+;; customizations from `custom-file' (customizations.el). Any settings there
+;; will override those made here.
+;; Consider moving your startup settings to the Preferences.el file, which
+;; is loaded after `custom-file':
+;; ~/Library/Preferences/Aquamacs Emacs/Preferences
+;; _____________________________________________________________________________
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(message "Hello-world -- this is my init.el file loading!")
+
 (add-to-list 'load-path "~/.emacs.d/misc")
 (add-to-list 'load-path "~/.emacs.d/yaml/")
 (add-to-list 'load-path "~/.emacs.d/matlab-emacs/")
 (add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
+(add-to-list 'load-path "~/.emacs.d/elpa")
 
 ;; C++
-(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode)) 
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
+
+;; Open in full screen by default.
+(set-frame-parameter nil 'fullscreen 'fullboth)
+
+;; OCAML
+;; (load "/Users/nalyd/.opam/system/share/emacs/site-lisp/tuareg-site-file")
 
 ;; Color Theme (in X mode)
-(if (eq 'x window-system)
-    (progn (require 'color-theme)
-	   (color-theme-initialize)
-	   (color-theme-classic)))
+;; (if (or (eq 'x window-system) (eq 'ns window-system))
+(progn (require 'color-theme)
+       (color-theme-initialize)
+       (color-theme-classic))
+
+;; ;; color Theme (in X mode)
+;; (if (or (eq 'x window-system) (eq 'ns window-system))
+;;     (progn (require 'color-theme)
+;; 	   (color-theme-initialize)
+;; 	   (color-theme-charcoal-black)))
+
+;; Color Theme (in X mode)
+(if (or (eq 'x window-system) (eq 'ns window-system))
+    (load-theme 'nimbus t)
+    ;; (use-package nimbus-theme)
+  )
+;; Sets current color theme as default for new frames (not tested).
+(if (boundp 'aquamacs-version)
+      (aquamacs-set-frame-parameters-as-default))
+
 
 ;; ----- Matlab -----
 (autoload 'matlab-mode "matlab.el" "Matlab Editing Mode" t)
@@ -33,7 +74,7 @@
 ;; ----- doxymacs -----
 
 ;; doxymacs-mode whenever we are in c-mode
-(add-hook 'c-mode-common-hook'doxymacs-mode)
+;; (add-hook 'c-mode-common-hook'doxymacs-mode)
 
 ;; doxygen syntax highlighting
 ;; (defun my-doxymacs-font-lock-hook ()
@@ -97,7 +138,7 @@
 	  )
       (end-of-line)
       ;; Don't insert whitespace if the line contains only whitespace
-      (unless (string-match "^[ \t]*" (buffer-substring-no-properties (line-beginning-position) (line-end-position)) )
+      (unless (string-match "^[ \t]*" (buffer-substring-no-properties (line-beginning-position) (lne-end-position)) )
 	(insert " "))
       (do ()
 	  ((< eol-pos (point)))
@@ -143,10 +184,10 @@
   (comment-line)
   )
 
-
-(global-set-key (kbd "M--") 'comment-line)
-(global-set-key (kbd "C-c c") 'fancy-comment)
-(global-set-key (kbd "C-c t") 'insert-todo)
+;; turned off for now
+;; (global-set-key (kbd "M--") 'comment-line)
+;; (global-set-key (kbd "C-c c") 'fancy-comment)
+;; (global-set-key (kbd "C-c t") 'insert-todo)
 
 
 ;; Cycle through windows in reverse
@@ -208,8 +249,14 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 
-(require 'tex)
-(TeX-global-PDF-mode t)
+(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
+(setq TeX-view-program-list
+      '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -r -g %n %o %b")))
+;; (setq TeX-view-program-list
+;;       '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+
+;; (require 'tex)
+;; (TeX-global-PDF-mode t)
 
 ;; FlyMake LaTeX
 ;; (require 'flymake)
@@ -233,7 +280,11 @@
 ;; Add LaTeX preview pane package to archive
 (require 'package)
 (add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+	     ;; '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/"))
+;; (add-to-list 'package-archives
+	     ;; '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t) ;org-mode archives
 
 ;; XML Mode
 ;; Automatically close 
@@ -268,4 +319,31 @@
  python-shell-completion-module-string-code
    "';'.join(module_completion('''%s'''))\n"
  python-shell-completion-string-code
-   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+ "';'.join(get_ipython().Completer.all_completions('''%s'''))\n") ;
+
+;; org-mode
+(add-hook 'org-mode-hook 'turn-on-org-cdlatex) ;latex shortcuts
+;; org capture
+;; (setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map "\C-cc" 'org-capture)
+;; (require 'org-journal)
+;; (setq org-journal-dir "~/workspace/journal")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   '((TeX-master . "paper")
+     (TeX-master . "../richlqr_neurips2020.tex")
+     (TeX-master . t)
+     (TeX-master . thesis))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; Turns on global-auto-revert-mode by default.
+(global-auto-revert-mode 1)

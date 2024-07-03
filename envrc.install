@@ -7,8 +7,11 @@ export PAGER="most -w"
 # PATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 PATH=/usr/local/bin:$PATH
 PATH=/usr/texbin:$PATH
-PATH=/usr/local/share/python:$PATH
+PATH="/usr/local/opt/python/libexec/bin:$PATH"
+# PATH=/usr/local/share/python:$PATH
 
 ENVIRONMENTS_DIR=~/workspace/environments
 
 export CLICOLOR=1
+
+export TERM=xterm-256color

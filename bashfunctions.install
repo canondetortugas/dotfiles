@@ -15,13 +15,18 @@ function act()
     source $ENVIRONMENTS_DIR/$1/bin/activate
 }
 
+function vw_pv()
+{
+    vw $@ 2>&1 | awk -v m=8 -v n=7 'NR<=m{next};NR>n+m{print line[NR%n]};{line[NR%n]=$0}'
+}
+
 # MARKS
 export MARKPATH=$HOME/.marks
 function go { 
     cd -P $MARKPATH/$1 2>/dev/null || echo "No such mark: $1"
 }
 function mark { 
-    mkdir -p $MARKPATH; ln -s $(pwd) $MARKPATH/$1
+    mkdir -p $MARKPATH; ln -s "$(pwd)" $MARKPATH/$1
 }
 function unmark { 
     rm -i $MARKPATH/$1 
@@ -29,7 +34,7 @@ function unmark {
 
 # Note: \t depends on GNU extension. With GNU, it will add a tab, but otherwise will just add a "t" character. Literal tab is used for cross-platform compatability
 function marks {
-    ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/	-/g' && echo
+    ls -l $MARKPATH | sed 's/ \{2,\}/ /g' | cut -d' ' -f9- | sed 's/ -/	-/g' && echo
 }
 
 # Russell's hack

@@ -3,11 +3,11 @@
   editor = emacs -nw
 
 [user]
-  name = Dylan Foster
-  email = turtlecannon@gmail.com
+	name = Dylan Foster
+	email = turtlecannon@gmail.com
 
 [color]
-  ui = true
+	ui = auto
 [color "branch"]
   current = yellow black bold
   local = yellow
@@ -36,7 +36,11 @@
   type = cat-file -t
   dump = cat-file -p
 [push]
-  default = nothing
+	default = simple
 
 [mergetool "emerge"]
 	path = /Users/nalyd/.emerge-for-git
+[pull]
+	rebase = false
+[http]
+	postBuffer = 1572864000

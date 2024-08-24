@@ -2,3 +2,5 @@
 
 # Colored man pages etc. "-w" turns on line wrapping
 export PAGER="most -w"
+
+ENVIRONMENTS_DIR=~/workspace/environments

@@ -27,6 +27,11 @@ function marks {
     ls -l $MARKPATH | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/	-/g' && echo
 }
 
+function act()
+{
+    source $ENVIRONMENTS_DIR/$1/bin/activate
+}
+
 # Russell's hack
 # txt()
 # {

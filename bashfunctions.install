@@ -5,6 +5,11 @@ udev_info()
   udevadm info -a -p  $(udevadm info -q path -n ${1})
 }
 
+function act()
+{
+    source $ENVIRONMENTS_DIR/$1/bin/activate
+}
+
 function cl()
 {
     cd $@ && ls;

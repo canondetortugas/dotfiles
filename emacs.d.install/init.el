@@ -223,19 +223,19 @@
 ;; 	    (setq latex-mode-extensions t) ) )
 
 ;; AUCTeX
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
+;; (setq TeX-auto-save t)
+;; (setq TeX-parse-self t)
+;; (setq-default TeX-master nil)
 
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+;; (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+;; (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+;; (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(setq reftex-plug-into-AUCTeX t)
+;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;; (setq reftex-plug-into-AUCTeX t)
 
-(require 'tex)
-(TeX-global-PDF-mode t)
+;; (require 'tex)
+;; (TeX-global-PDF-mode t)
 
 ;; FlyMake LaTeX
 ;; (require 'flymake)
@@ -248,18 +248,18 @@
 
 
 ;; LaTeX info - C-h S looks up documentation for TeX symbol at point
-(require 'info-look)
-(info-lookup-add-help
- :mode 'latex-mode
- :regexp ".*"
- :parse-rule "\\\\?[a-zA-Z]+\\|\\\\[^a-zA-Z]"
- :doc-spec '(("(latex2e)Concept Index" )
-	     ("(latex2e)Command Index")))
+;; (require 'info-look)
+;; (info-lookup-add-help
+;;  :mode 'latex-mode
+;;  :regexp ".*"
+;;  :parse-rule "\\\\?[a-zA-Z]+\\|\\\\[^a-zA-Z]"
+;;  :doc-spec '(("(latex2e)Concept Index" )
+;; 	     ("(latex2e)Command Index")))
 
 ;; Add LaTeX preview pane package to archive
-(require 'package)
-(add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; (require 'package)
+;; (add-to-list 'package-archives
+;;   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; XML Mode
 ;; Automatically close 
